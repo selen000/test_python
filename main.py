@@ -12,6 +12,10 @@ def func_2(data):
     data = data * 10
     return data
 
+def func_3(data):
+    data = func_2(data)
+    return data
+
 if __name__ == '__main__':
     # 関数1
     func_1()
@@ -20,4 +24,7 @@ if __name__ == '__main__':
     print(data)
 
     data = func_2(data)
+    print(data)
+
+    data = func_3(data)
     print(data)
