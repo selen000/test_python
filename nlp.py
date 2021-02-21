@@ -7,7 +7,14 @@ import collections
 import pandas as pd
 from janome.tokenizer import Tokenizer
 
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 tokenizer = Tokenizer()
+
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['Hiragino Maru Gothic Pro', 'Yu Gothic', 'Meirio', 'Takao', 'IPAexGothic',
+                                   'IPAPGothic', 'VL PGothic', 'Noto Sans CJK JP']
 
 def preprocess_(texts):
     """
@@ -81,8 +88,15 @@ if __name__ == __name__ == '__main__':
 
     df = count_word_to_df(word_list)
 
+    # 結果の可視化 top30
+    df = df.sort_values("count",ascending=False).head(30)
+    plt.figure(figsize=(20, 30))
+    g = sns.barplot(x=df["count"], y=df.index)
 
-    print(df)
+    for item in g.get_yticklabels():
+        item.set_rotation(0)
+
+    plt.show()
 
     # 不要語
     # tf-idfによる頻度解析
