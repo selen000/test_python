@@ -18,9 +18,7 @@ def _preprocess(df):
     #df["Embarked"][df["Embarked"] == "S"] = 0
     #df["Embarked"][df["Embarked"] == "C"] = 1
     #df["Embarked"][df["Embarked"] == "Q"] = 2
-    #df.Fare[152] = df.Fare.median()
-
-
+    #df.fare[152] = df.fare.median()
 
     # テストデータと訓練データに分割する
     train_df, test_df = train_test_split(df, test_size=0.3)
@@ -41,9 +39,17 @@ if __name__ == '__main__':
 
     # テスト用のDataはタイタニックを使用
     df = sns.load_dataset("titanic")
-    print(df)
 
     # 前処理
     target, features_one, train_df, test_df = _preprocess(df)
 
-    print(train_df)
+    # 決定木作成
+    my_tree_one = tree.DecisionTreeClassifier()
+    my_tree_one = my_tree_one.fit(features_one, target)
+
+    test_features = test_df[["pclass", "sex", "age", "fare"]].values
+
+    # 「test」の説明変数を使って「my_tree_one」のモデルで予測
+    my_prediction = my_tree_one.predict(test_features)
+
+    print(my_prediction)
