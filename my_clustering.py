@@ -4,6 +4,7 @@ import seaborn as sns
 
 from sklearn.cluster import KMeans
 import my_plotting as m_plot
+import my_func as m_func
 
 def my_k_means(df, n):
     """
@@ -16,6 +17,8 @@ def my_k_means(df, n):
     # 分類結果のラベルを取得する
     labels = kmeans_model.labels_
     return kmeans_model, labels
+
+
 
 if __name__ == '__main__':
     # テスト用のDataはタイタニックを使用
@@ -34,6 +37,10 @@ if __name__ == '__main__':
 
     # クラスタごとに色分けされた散布図
     m_plot.clusterring_scatter(df,target_x, target_y)
+
+    # 特徴量の散布図を可視化
+    # クラスタごとの特徴量を箱ひげ図として可視化
+    m_func.my_box_plot(df, df["cluster"], target_y, target_hue="cluster")
 
 
 
