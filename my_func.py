@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
+from sklearn import preprocessing
+
 def my_bar_plot(df, target_x, target_y):
     """
     棒グラフ可視化用関数
@@ -36,6 +38,22 @@ def my_box_plot(df, target_x, target_y, target_hue=None):
     """
     ax = sns.boxplot(x=target_x, y=target_y, data=df, hue=target_hue)
     plt.show()
+
+
+def my_preprocess_(df):
+    """
+    データ前処理まとめ
+    :param df:
+    :return:
+    """
+
+    # 欠損値補間 0埋め
+    df = df.fillna(0)
+
+    # データの正規化
+    ss = preprocessing.StandardScaler()
+    df = ss.fit_transform(df)
+    return df
 
 
 

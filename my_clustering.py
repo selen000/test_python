@@ -18,14 +18,18 @@ def my_k_means(df, n):
     labels = kmeans_model.labels_
     return kmeans_model, labels
 
-
-
 if __name__ == '__main__':
     # テスト用のDataはタイタニックを使用
     df = sns.load_dataset("iris")
 
+    # 学習用データフレーム作成
+    df_ = df.iloc[:, 0:4]
+
+    # データ処理
+    df_ = m_func.my_preprocess_(df_)
+
     # 学習
-    k_means_model, labels = my_k_means(df.iloc[:, 0:4], 3)
+    k_means_model, labels = my_k_means(df_, 3)
 
     # ラベルを付与する
     df["cluster"] = labels
