@@ -3,10 +3,16 @@
 
 import configparser
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 
+
+def preprocess_(df):
+    """
+    前処理用関数
+    :return:
+    """
+    return df
 
 def sarima_learning(df):
     """
@@ -30,13 +36,16 @@ if __name__ == '__main__':
     dateparse = lambda dates: pd.datetime.strptime(dates, '%Y-%m')
     df = pd.read_csv(input_file_name, index_col='Month', date_parser=dateparse, dtype='float')
 
+    # 前処理
+    df = preprocess_(df)
+
     # 学習
     SARIMA_3_1_2_111 = sarima_learning(df)
 
     predict_start = "1960-01-01"
     predict_end = "1965-12-01"
 
-    pred = SARIMA_3_1_2_111.predict('1960-01-01', '1965-12-01')
+    pred = SARIMA_3_1_2_111.predict(predict_start, predict_end)
 
     # 実データと予測結果の図示
     plt.plot(df, label="actual")
