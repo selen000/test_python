@@ -1,6 +1,21 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import statsmodels.api as sm
+
+def func_correlogram(df):
+    """
+    コレログラム
+    """
+    # 自己相関のコレログラム
+    fig = plt.figure(figsize=(18, 8))
+    ax1 = fig.add_subplot(211)
+    fig = sm.graphics.tsa.plot_acf(df, lags=40, ax=ax1)
+    # 偏自己相関のコレログラム
+    ax2 = fig.add_subplot(212)
+    fig = sm.graphics.tsa.plot_pacf(df, lags=40, ax=ax2)
+    plt.show()
+
 
 
 def func_box_plot(df, target_x, target_y):

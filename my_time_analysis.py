@@ -5,7 +5,7 @@ import configparser
 import pandas as pd
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
-
+import my_plotting as m_plot
 
 def preprocess_(df):
     """
@@ -35,6 +35,9 @@ if __name__ == '__main__':
 
     dateparse = lambda dates: pd.datetime.strptime(dates, '%Y-%m')
     df = pd.read_csv(input_file_name, index_col='Month', date_parser=dateparse, dtype='float')
+
+    # 周期性確認用にコレログラム可視化
+    m_plot.func_correlogram(df)
 
     # 前処理
     df = preprocess_(df)
