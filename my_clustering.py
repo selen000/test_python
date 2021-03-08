@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
-import seaborn as sns
+import configparser
 
+import seaborn as sns
 from sklearn.cluster import KMeans
 import my_plotting as m_plot
 import my_func as m_func
@@ -19,10 +20,21 @@ def my_k_means(df, n):
     return kmeans_model, labels
 
 if __name__ == '__main__':
+
+    # 設定情報読み込み
+    ini = configparser.ConfigParser()
+    ini.read('./setup.ini', 'UTF-8')
+
+    input_file_path = ini["FILE_PATH"]["CSV_FILE_PATH"]
+    input_file_name = ini["FILE_PATH"]["FILE_NAME"]
+    output_file_path = ini["FILE_PATH"]["OUTPUT_FILE_PATH"]
+
     # テスト用のDataはタイタニックを使用
-    df = sns.load_dataset("iris")
+    #df = sns.load_dataset("iris")
+    df = pd.read_csv(input_file_path + input_file_name)
 
     # 学習用データフレーム作成
+    # ToDo ここ特徴量はconfigから取得する仕組みにする
     df_ = df.iloc[:, 0:4]
 
     # データ処理
@@ -33,6 +45,8 @@ if __name__ == '__main__':
 
     # ラベルを付与する
     df["cluster"] = labels
+
+    # 可視化対象
     target_x = df.columns[0]
     target_y = df.columns[1]
 
